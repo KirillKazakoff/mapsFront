@@ -1,0 +1,16 @@
+@import './abstracts/variables';
+@import './base/defaultStyle';
+@import './base/fonts';
+@import './layout';
+
+@import './components/feedback';
+@import './components/loaders';
+
+#map {
+    height: 100vh;
+    border: 1px solid black;
+}
+
+.leaflet-control-attribution {
+    display: none;
+}

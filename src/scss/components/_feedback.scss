@@ -1,0 +1,41 @@
+.feedback-wrapper {
+    position: absolute;
+}
+
+.feedback {
+    font-weight: 400;
+    color: var(--black);
+    z-index: 10000;
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    position: absolute;
+    top: 120%;
+    right: 0px;
+    max-width: 250px;
+    background-color: var(--red);
+}
+
+.feedback-top {
+    top: -110%;
+}
+
+.feedback-arrow {
+    position: absolute;
+    left: 43%;
+    top: -6px;
+    margin: auto;
+    width: 1px;
+    height: 1px;
+
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid var(--red);
+}
+
+.feedback-arrow-top {
+    border-bottom: none;
+    border-top: 10px solid var(--red);
+    top: unset;
+    bottom: -8px;
+}

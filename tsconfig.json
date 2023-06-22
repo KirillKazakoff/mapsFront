@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "module": "esnext",
+        "target": "es5",
+        "jsx": "react",
+        "noEmit": false,
+        "noImplicitThis": true,
+        "strictNullChecks": false,
+        "lib": [
+            "es6",
+            "dom",
+            "dom.iterable",
+            "es2015.generator",
+            "esnext",
+            "esnext.array",
+        ],
+        "resolveJsonModule": true,
+    },
+    "parcelTsPluginOptions": {
+        // If true type-checking is disabled
+        "transpileOnly": false
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
