@@ -12,6 +12,7 @@ export type SSD = {
     agreement_no: string;
     catch_zone: string;
     coordinates: string;
+    status: string;
 };
 
 export type ProductionInput = {

@@ -1,5 +1,7 @@
 import { Card } from 'antd';
-import { LatLngExpression, LeafletEventHandlerFnMap } from 'leaflet';
+import L, {
+    divIcon, Icon, LatLngExpression, LeafletEventHandlerFnMap,
+} from 'leaflet';
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { SSDInfoT } from '../../types/models';
@@ -17,136 +19,84 @@ export default function MarkerSSD({ ssdArray }: Props) {
         click: () => console.log(ssd),
     };
 
-    const productionDetails = ssd.productionDetails.map((details) => (
-        <div className='control'>
-            <div className='field__title'>{`${details.name} ${details.sort}`}</div>
-            <div className='field__value'>{details.total}</div>
-        </div>
-    ));
+    const isTransport = ssd.ssd.company !== 'ТРК' && ssd.ssd.company !== 'МСИ';
+    let companyColor = '';
+    if (ssd.ssd.company === 'ТРК') companyColor = 'red';
+    if (ssd.ssd.company === 'МСИ') companyColor = 'blue';
+
+    console.log(ssd.ssd.status);
+
+    const customIcon = new Icon({
+        className: `marker-${companyColor}`,
+        iconUrl: isTransport ? './svg/cargo.svg' : './svg/location-pin.svg',
+        iconSize: [45, 45],
+    });
+
+    const divMarkerIcon = divIcon({
+        html: `<div class='marker__wrapper'>
+                    <div class='marker__title'>${ssd.ssd.vessel}</div>
+                    <img
+                        class='svg svg--scale svg-marker marker-${companyColor}'
+                        src='./svg/location-pin.svg'
+                        alt='remove-icon'
+                    />
+                </div>`,
+    });
 
     return (
-        <Marker
-            eventHandlers={eventHandlers}
-            key={ssd.ssd.id}
-            position={coordinates as LatLngExpression}
-        >
-            <Popup>
-                <Card title={`${ssd.ssd.vessel} ${date} \n${ssd.ssd.catch_zone}`}>
-                    <Card type='inner' title='Вылов продукции'>
-                        <h3 className='card__section__title'>Вылов рыбопродукции</h3>
-                        <div className='control'>
-                            <div className='field__title'>
-                                {ssd?.productionInput?.name}
+        <div className='marker__wrapper'>
+            <div className='marker__title'>{ssd.ssd.vessel}</div>
+            <Marker
+                icon={divMarkerIcon}
+                eventHandlers={eventHandlers}
+                key={ssd.ssd.id}
+                position={coordinates as LatLngExpression}
+            >
+                <Popup>
+                    <Card
+                        className='my-card'
+                        title={`${ssd.ssd.vessel} ${date} \n${ssd.ssd.catch_zone}`}
+                    >
+                        <Card type='inner' title='Вылов продукции'>
+                            <div className='control'>
+                                <div className='field__title'>
+                                    {ssd?.productionInput?.name}
+                                </div>
+                                <div className='field__value'>
+                                    {ssd?.productionInput?.total}
+                                </div>
                             </div>
-                            <div className='field__value'>
-                                {ssd?.productionInput?.total}
-                            </div>
-                        </div>
-                    </Card>
-                    <Card type='inner' title='Выпуск рыбопродукции'>
-                        <h3 className='card__section__title'>Выпуск рыбопродукции</h3>
-                        <div className='control'>
+                        </Card>
+                        <Card type='inner' title='Выпуск рыбопродукции'>
                             {ssd.productionDetails.map((details) => (
-                                <div className='control'>
-                                    <div className='field__title'>{`${details.name} ${details.sort}`}</div>
+                                <div
+                                    key={`${details.name} ${details.sort}`}
+                                    className='control'
+                                >
+                                    <div className='field__title'>{`${details.name}`}</div>
                                     <div className='field__value'>{details.total}</div>
                                 </div>
                             ))}
-                        </div>
+                        </Card>
+                        <Card type='inner' title='Нажива'>
+                            <div className='control'>
+                                <div className='field__title'>{ssd?.bait?.name}</div>
+                                <div className='field__value'>{ssd?.bait?.total}</div>
+                            </div>
+                        </Card>
+                        <Card type='inner' title='Резерв топлива'>
+                            <div className='control'>
+                                <div className='field__title'>{'Топливо'}</div>
+                                <div className='field__value'>{ssd.reserve.fuel}</div>
+                            </div>
+                            <div className='control'>
+                                <div className='field__title'>{'Вода-запас'}</div>
+                                <div className='field__value'>{ssd.reserve.water}</div>
+                            </div>
+                        </Card>
                     </Card>
-                    <Card type='inner' title='Нажива'>
-                        <div className='field__title'>{ssd?.bait?.name}</div>
-                        <div className='field__value'>{ssd?.bait?.total}</div>
-                    </Card>
-                    <Card type='inner' title='Резерв топлива'>
-                        <div className='control'>
-                            <div className='field__title'>{'Топливо'}</div>
-                            <div className='field__value'>{ssd.reserve.fuel}</div>
-                        </div>
-                        <div className='control'>
-                            <div className='field__title'>{'Вода-запас'}</div>
-                            <div className='field__value'>{ssd.reserve.water}</div>
-                        </div>
-                    </Card>
-                </Card>
-            </Popup>
-        </Marker>
+                </Popup>
+            </Marker>
+        </div>
     );
 }
-
-// import { LeafletEventHandlerFnMap } from 'leaflet';
-// import React from 'react';
-// import { Marker } from 'react-leaflet';
-// import { SSDInfoT } from '../../types/models';
-// import { dateDb } from '../../utils/date';
-// import { getCoordinates } from '../../utils/getCoordinates';
-
-// type Props = { ssdArray: SSDInfoT[] };
-
-// export default function MarkerSSD({ ssdArray }: Props) {
-//     const ssd = ssdArray[0];
-//     const coordinates = getCoordinates(ssd.ssd.coordinates);
-
-//     const eventHandlers: LeafletEventHandlerFnMap = {
-//         click: () => console.log(ssd),
-//     };
-
-//     const productionDetails = ssd.productionDetails.length > 0
-//         ? ssd.productionDetails.map((details) => {
-//             return (
-//                 <div className='control'>
-//                     <div className='field__title'>
-//                         {`${details.name} ${details.sort}`}
-//                     </div>
-//                     <div className='field__value'>{details.total}</div>
-//                 </div>
-//             );
-//         })
-//         : null;
-
-//     const contentList: Record<string, React.ReactNode> = {
-//         tab1: (
-//             <div className='card__tab'>
-//                 <div className='card__section'>
-//                     <h3 className='card__section__title'>Вылов рыбопродукции</h3>
-//                     <div className='control'>
-//                         <div className='field__title'>
-//                             {ssd?.productionInput?.name}
-//                         </div>
-//                         <div className='field__value'>
-//                             {ssd?.productionInput?.total}
-//                         </div>
-//                     </div>
-//                 </div>
-//                 <div className='card__section'>
-//                     <h3 className='card__section__title'>Выпуск рыбопродукции</h3>
-//                     <div className='ssd_prod-details fields-wrapper'>
-//                         {productionDetails}
-//                     </div>
-//                 </div>
-//             </div>
-//         ),
-//         tab2: (
-//             <div className='card__tab'>
-//                 <div className='control'>
-//                     <div className='field__title'>Подзона</div>
-//                     <div className='field__value'>{ssd.ssd.catch_zone}</div>
-//                 </div>
-//                 <div className='control'>
-//                     <div className='field__title'>Дата</div>
-//                     <div className='field__value'>
-//                         {dateDb.fromDb(ssd.ssd.date)}
-//                     </div>
-//                 </div>
-//                 <div className='control'>
-//                     <div className='field__title'>Дата</div>
-//                     <div className='field__value'>
-//                         {dateDb.fromDb(ssd.ssd.date)}
-//                     </div>
-//                 </div>
-//             </div>
-//         ),
-//     };
-
-//     return <Marker />;
-// }
