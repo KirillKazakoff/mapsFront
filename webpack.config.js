@@ -35,7 +35,7 @@ module.exports = {
         client: {
             logging: 'none',
         },
-        port: 9000,
+        port: 9005,
         compress: true,
         historyApiFallback: true,
         https: false,

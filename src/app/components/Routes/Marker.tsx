@@ -7,6 +7,11 @@ import { Marker, Popup } from 'react-leaflet';
 import { SSDInfoT } from '../../types/models';
 import { dateDb } from '../../utils/date';
 import { getCoordinates } from '../../utils/getCoordinates';
+import BaitTab from './PopupTabs/BaitTab';
+import ProdInputTab from './PopupTabs/ProdInputTab';
+import ProdOutputTab from './PopupTabs/ProdOutputTab';
+import ProdTransportedTab from './PopupTabs/ProdTransportedTab';
+import ReserveTab from './PopupTabs/ReserveTab';
 
 type Props = { ssdArray: SSDInfoT[] };
 
@@ -57,43 +62,11 @@ export default function MarkerSSD({ ssdArray }: Props) {
                         className='my-card'
                         title={`${ssd.ssd.vessel} ${date} \n${ssd.ssd.catch_zone}`}
                     >
-                        <Card type='inner' title='Вылов продукции'>
-                            <div className='control'>
-                                <div className='field__title'>
-                                    {ssd?.productionInput?.name}
-                                </div>
-                                <div className='field__value'>
-                                    {ssd?.productionInput?.total}
-                                </div>
-                            </div>
-                        </Card>
-                        <Card type='inner' title='Выпуск рыбопродукции'>
-                            {ssd.productionDetails.map((details) => (
-                                <div
-                                    key={`${details.name} ${details.sort}`}
-                                    className='control'
-                                >
-                                    <div className='field__title'>{`${details.name}`}</div>
-                                    <div className='field__value'>{details.total}</div>
-                                </div>
-                            ))}
-                        </Card>
-                        <Card type='inner' title='Нажива'>
-                            <div className='control'>
-                                <div className='field__title'>{ssd?.bait?.name}</div>
-                                <div className='field__value'>{ssd?.bait?.total}</div>
-                            </div>
-                        </Card>
-                        <Card type='inner' title='Резерв топлива'>
-                            <div className='control'>
-                                <div className='field__title'>{'Топливо'}</div>
-                                <div className='field__value'>{ssd.reserve.fuel}</div>
-                            </div>
-                            <div className='control'>
-                                <div className='field__title'>{'Вода-запас'}</div>
-                                <div className='field__value'>{ssd.reserve.water}</div>
-                            </div>
-                        </Card>
+                        <ProdInputTab ssd={ssd} />
+                        <ProdOutputTab ssd={ssd} />
+                        <ProdTransportedTab ssd={ssd} />
+                        <BaitTab ssd={ssd} />
+                        <ReserveTab ssd={ssd} />
                     </Card>
                 </Popup>
             </Marker>

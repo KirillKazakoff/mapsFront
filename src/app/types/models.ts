@@ -21,6 +21,8 @@ export type ProductionInput = {
     total: number;
 };
 
+export type ProductionTransport = ProductionInput;
+
 export type ProductionDetails = {
     id_ssd: string;
     name: string;
@@ -45,6 +47,7 @@ export type SSDInfoT = {
     ssd: SSD;
     productionDetails: ProductionDetails[];
     productionInput: ProductionInput;
+    productionTransport: ProductionTransport[];
     reserve: Reserve;
     bait: Bait;
 };
