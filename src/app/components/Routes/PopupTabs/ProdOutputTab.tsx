@@ -8,7 +8,10 @@ export default function ProdOutputTab({ ssd }: Props) {
     if (ssd.productionDetails.length === 0) return null;
 
     return (
-        <Card type='inner' title='Выпуск рыбопродукции'>
+        <Card
+            type='inner' size='small'
+            title='Выпуск рыбопродукции'
+        >
             {ssd.productionDetails.map((details) => (
                 <div key={`${details.name} ${details.sort}`} className='control'>
                     <div className='field__title'>{`${details.name}`}</div>

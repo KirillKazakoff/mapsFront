@@ -8,7 +8,10 @@ export default function ReserveTab({ ssd }: Props) {
     if (!ssd.reserve.id_ssd) return null;
 
     return (
-        <Card type='inner' title='Резерв топлива'>
+        <Card
+            size='small' type='inner'
+            title='Резерв топлива'
+        >
             <div className='control'>
                 <div className='field__title'>{'Топливо'}</div>
                 <div className='field__value'>{ssd.reserve.fuel}</div>

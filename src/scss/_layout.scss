@@ -1,16 +1,4 @@
 // commons
-.leaflet-popup-content {
-    min-width: 400px;
-    margin: 0;
-}
-
-.leaflet-popup-close-button {
-    display: none;
-}
-
-.my-card {
-    min-width: 400px;
-}
 
 .some-class {
     height: 100vh;
@@ -43,9 +31,23 @@
     &-add {
         width: 15px;
     }
-    // &--scale:hover {
-    //     transform: scale(1.5);
-    // }
+    &--scale:hover {
+        transform: scale(1.5);
+    }
+}
+
+.my-card {
+    min-width: 500px;
+}
+
+// redefine leaflet classes
+.leaflet-popup-content {
+    min-width: 500px;
+    margin: 0;
+}
+
+.leaflet-popup-close-button {
+    display: none;
 }
 
 .leaflet-container .leaflet-marker-pane img {
@@ -55,4 +57,12 @@
 .leaflet-div-icon {
     border: none;
     background: transparent;
+}
+
+.leaflet-container .marker__wrapper {
+    display: none;
+}
+
+.leaflet-marker-icon .marker__wrapper {
+    display: block;
 }

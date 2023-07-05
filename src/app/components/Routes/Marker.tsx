@@ -31,17 +31,11 @@ export default function MarkerSSD({ ssdArray }: Props) {
 
     console.log(ssd.ssd.status);
 
-    const customIcon = new Icon({
-        className: `marker-${companyColor}`,
-        iconUrl: isTransport ? './svg/cargo.svg' : './svg/location-pin.svg',
-        iconSize: [45, 45],
-    });
-
     const divMarkerIcon = divIcon({
-        html: `<div class='marker__wrapper'>
+        html: `<div class='marker__wrapper svg--scale'>
                     <div class='marker__title'>${ssd.ssd.vessel}</div>
                     <img
-                        class='svg svg--scale svg-marker marker-${companyColor}'
+                        class='svg svg-marker marker-${companyColor}'
                         src='./svg/location-pin.svg'
                         alt='remove-icon'
                     />
@@ -61,6 +55,7 @@ export default function MarkerSSD({ ssdArray }: Props) {
                     <Card
                         className='my-card'
                         title={`${ssd.ssd.vessel} ${date} \n${ssd.ssd.catch_zone}`}
+                        extra={`${ssd.ssd.status}`}
                     >
                         <ProdInputTab ssd={ssd} />
                         <ProdOutputTab ssd={ssd} />
