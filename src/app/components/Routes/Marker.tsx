@@ -31,6 +31,12 @@ export default function MarkerSSD({ ssdArray }: Props) {
 
     console.log(ssd.ssd.status);
 
+    const customIcon = new Icon({
+        className: `marker marker-${companyColor}`,
+        tooltipAnchor: [10, 12],
+        iconUrl: isTransport ? './svg/cargo.svg' : './svg/location-pin.svg',
+        iconSize: [35, 35],
+    });
     const divMarkerIcon = divIcon({
         html: `<div class='marker__wrapper svg--scale'>
                     <div class='marker__title'>${ssd.ssd.vessel}</div>
