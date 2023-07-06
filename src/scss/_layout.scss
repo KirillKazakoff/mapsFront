@@ -12,6 +12,12 @@
 }
 
 .marker {
+    &__title {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 30px;
+    }
     &__wrapper {
         width: 30px;
         max-height: 30px;
@@ -37,12 +43,17 @@
 }
 
 .my-card {
-    min-width: 500px;
+    min-width: 600px;
 }
 
 // redefine leaflet classes
+.leaflet-popup {
+    margin-left: 8px;
+    margin-bottom: -10px;
+}
+
 .leaflet-popup-content {
-    min-width: 500px;
+    min-width: 600px;
     margin: 0;
 }
 
@@ -65,4 +76,30 @@
 
 .leaflet-marker-icon .marker__wrapper {
     display: block;
+}
+
+// grid
+.grid {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    min-height: 30px;
+}
+.grid__cell {
+    padding: 5px 10px !important;
+}
+.grid__cell-title {
+    font-weight: bold;
+}
+.grid__cell--output-name {
+    width: 60% !important;
+}
+.grid__cell--output-sort {
+    width: 10% !important;
+}
+.grid__cell--output-current {
+    width: 15% !important;
+}
+.grid__cell--output-total {
+    width: 15% !important;
 }

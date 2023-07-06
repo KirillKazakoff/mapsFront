@@ -12,10 +12,26 @@ export default function ProdOutputTab({ ssd }: Props) {
             type='inner' size='small'
             title='Выпуск рыбопродукции'
         >
+            <div className='grid'>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--output-name'>
+                    {'Наименование'}
+                </Card.Grid>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--output-sort'>
+                    {'Сорт'}
+                </Card.Grid>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--output-current'>
+                    {'Выпуск'}
+                </Card.Grid>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--output-total'>
+                    {'Бортовая'}
+                </Card.Grid>
+            </div>
             {ssd.productionDetails.map((details) => (
-                <div key={`${details.name} ${details.sort}`} className='control'>
-                    <div className='field__title'>{`${details.name}`}</div>
-                    <div className='field__value'>{details.total}</div>
+                <div className='grid' key={`${details.name} ${details.sort}`}>
+                    <Card.Grid className='grid__cell grid__cell--output-name'>{`${details.name}`}</Card.Grid>
+                    <Card.Grid className='grid__cell grid__cell--output-sort'>{`${details.sort}`}</Card.Grid>
+                    <Card.Grid className='grid__cell grid__cell--output-current'>{`${details.current}`}</Card.Grid>
+                    <Card.Grid className='grid__cell grid__cell--output-total'>{`${details.total}`}</Card.Grid>
                 </div>
             ))}
         </Card>
