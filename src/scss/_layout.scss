@@ -86,14 +86,6 @@
     background: transparent;
 }
 
-// .leaflet-container .marker__wrapper {
-//     display: none;
-// }
-
-// .leaflet-marker-icon .marker__wrapper {
-//     display: block;
-// }
-
 // grid
 .grid {
     display: flex;
@@ -101,21 +93,29 @@
     text-align: center;
     min-height: 30px;
 }
+
 .grid__cell {
     padding: 5px 10px !important;
-}
-.grid__cell-title {
-    font-weight: bold;
-}
-.grid__cell--output-name {
-    width: 60% !important;
-}
-.grid__cell--output-sort {
-    width: 10% !important;
-}
-.grid__cell--output-current {
-    width: 15% !important;
-}
-.grid__cell--output-total {
-    width: 15% !important;
+    &-title {
+        font-weight: bold;
+    }
+    &--output-name {
+        width: 60% !important;
+    }
+    &--output-sort {
+        width: 10% !important;
+    }
+    &--output-current {
+        width: 15% !important;
+    }
+    &--output-total {
+        width: 15% !important;
+    }
+
+    &--transport-name {
+        width: 80% !important;
+    }
+    &--transport-total {
+        width: 20% !important;
+    }
 }

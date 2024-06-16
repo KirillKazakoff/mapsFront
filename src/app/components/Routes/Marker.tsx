@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import L, {
+import {
     divIcon, Icon, LatLngExpression, LeafletEventHandlerFnMap,
 } from 'leaflet';
 import React from 'react';
@@ -24,19 +24,10 @@ export default function MarkerSSD({ ssdArray }: Props) {
         click: () => console.log(ssd),
     };
 
-    const isTransport = ssd.ssd.company !== 'ТРК' && ssd.ssd.company !== 'МСИ';
     let companyColor = '';
     if (ssd.ssd.company === 'ТРК') companyColor = 'red';
     if (ssd.ssd.company === 'МСИ') companyColor = 'blue';
 
-    console.log(ssd.ssd.status);
-
-    const customIcon = new Icon({
-        className: `marker marker-${companyColor}`,
-        tooltipAnchor: [10, 12],
-        iconUrl: isTransport ? './svg/cargo.svg' : './svg/location-pin.svg',
-        iconSize: [35, 35],
-    });
     const divMarkerIcon = divIcon({
         html: `<div class='marker__wrapper svg--scale'>
                     <div class='marker__title'>${ssd.ssd.vessel}</div>
@@ -49,28 +40,25 @@ export default function MarkerSSD({ ssdArray }: Props) {
     });
 
     return (
-        <div className='marker__wrapper'>
-            <div className='marker__title'>{ssd.ssd.vessel}</div>
-            <Marker
-                icon={divMarkerIcon}
-                eventHandlers={eventHandlers}
-                key={ssd.ssd.id}
-                position={coordinates as LatLngExpression}
-            >
-                <Popup>
-                    <Card
-                        className='my-card'
-                        title={`${ssd.ssd.vessel} ${date} \n${ssd.ssd.catch_zone}`}
-                        extra={`${ssd.ssd.status}`}
-                    >
-                        <ProdInputTab ssd={ssd} />
-                        <ProdOutputTab ssd={ssd} />
-                        <ProdTransportedTab ssd={ssd} />
-                        <BaitTab ssd={ssd} />
-                        <ReserveTab ssd={ssd} />
-                    </Card>
-                </Popup>
-            </Marker>
-        </div>
+        <Marker
+            icon={divMarkerIcon}
+            eventHandlers={eventHandlers}
+            key={ssd.ssd.id}
+            position={coordinates as LatLngExpression}
+        >
+            <Popup>
+                <Card
+                    className='my-card'
+                    title={`${ssd.ssd.vessel} ${date} \n${ssd.ssd.catch_zone}`}
+                    extra={`${ssd.ssd.status}`}
+                >
+                    <ProdInputTab ssd={ssd} />
+                    <ProdOutputTab ssd={ssd} />
+                    <ProdTransportedTab ssd={ssd} />
+                    <BaitTab ssd={ssd} />
+                    <ReserveTab ssd={ssd} />
+                </Card>
+            </Popup>
+        </Marker>
     );
 }

@@ -12,10 +12,22 @@ export default function ProdTransportedTab({ ssd }: Props) {
             size='small' type='inner'
             title='Транспортируемая рыбопродукция'
         >
+            <div className='grid'>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--transport-name'>
+                    {'Наименование'}
+                </Card.Grid>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--transport-total'>
+                    {'Всего, тн'}
+                </Card.Grid>
+            </div>
             {ssd.productionTransport.map((details) => (
-                <div key={`${details.name}`} className='control'>
-                    <div className='field__title'>{`${details.name}`}</div>
-                    <div className='field__value'>{details.total}</div>
+                <div className='grid' key={details.name}>
+                    <Card.Grid className='grid__cell grid__cell--transport-name'>
+                        {details.name}
+                    </Card.Grid>
+                    <Card.Grid className='grid__cell grid__cell--transport-total'>
+                        {details.total}
+                    </Card.Grid>
                 </div>
             ))}
         </Card>
