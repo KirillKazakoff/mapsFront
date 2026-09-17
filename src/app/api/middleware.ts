@@ -4,6 +4,7 @@ import { SSDByVesselT } from '../types/types';
 
 const initSsdByVessels = async () => {
     const vessels = await api.get.vessels();
+    // get last ssd for each vessel in sp
     const ssdByVessel = await Promise.all(
         vessels.map((vessel) => api.get.ssdInfoByVessel(vessel.id)),
     );

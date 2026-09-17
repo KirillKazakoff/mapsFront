@@ -106,6 +106,7 @@
                 "maximum": 2
             }
         ],
+        "linebreak-style": "off",
         "react/no-unescaped-entities": [
             "error",
             {

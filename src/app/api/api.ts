@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Vessel, SSDInfoT } from '../types/models';
 
-const baseUrl = 'http://localhost:9092';
+const baseUrl = 'http://localhost:3001';
 
 const vessel = async (id: string) => {
     const res = await axios.get<Vessel>(`${baseUrl}/vessel/${id}`);
