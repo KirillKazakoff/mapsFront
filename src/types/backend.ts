@@ -1,37 +1,7 @@
 /* eslint-disable */
 // Автоматически сгенерированные типы бэкенда
 
-export type SSDCommonT = {
-    idCompany: number;
-    idVessel: number;
-    idSsd: string;
-    idZoneCurrent: number;
-    idZoneArrival: number | null;
-    coordinates: string | null;
-    dateArrival: string | null;
-    dateSsd: string;
-    vessel: {
-        idCompany: number;
-        nameRus: string;
-        nameEng: string | null;
-        idVessel: number;
-        id: string;
-    } | null;
-};
+export type SSDCommonT = { vessel: { idVessel: number; nameRus: string; nameEng: string | null; idCompany: number; id: string; } | null; idSsd: string; idVessel: number; idZoneCurrent: number; idZoneArrival: number | null; coordinates: string | null; dateArrival: string | null; dateSsd: string; idCompany: number; status: string | null; };
 
-export type SSD2T = {
-    idCompany: number;
-    idVessel: number;
-    idSsd: string;
-    idZoneCurrent: number;
-    idZoneArrival: number | null;
-    coordinates: string | null;
-    dateArrival: string | null;
-    dateSsd: string;
-    company: {
-        idCompany: number;
-        nameRus: string;
-        nameEng: string;
-        group: string | null;
-    } | null;
-};
+export type SSDFullT = { idCompany: number; status: string | null; idVessel: number; idSsd: string; idZoneCurrent: number; idZoneArrival: number | null; coordinates: string | null; dateArrival: string | null; dateSsd: string; catches: { idVbr: number; idSubzone: number; id: number; idSsd: string; amount: number; idQuote: number | null; subzone: { idSubzone: number; subareaRus: string; areaRus: string; subareaEng: string | null; status: string | null; idZone: number | null; country: string | null; } | null; vbr: { nameRus: string | null; nameEng: string | null; group: string | null; idVbr: number; } | null; }[]; products: { idProduct: number; idVbr: number; idSubzone: number; id: number; idSsd: string; amount: number; idQuote: number | null; subzone: { idSubzone: number; subareaRus: string; areaRus: string; subareaEng: string | null; status: string | null; idZone: number | null; country: string | null; } | null; product: { nameRus: string; nameEng: string; group: string | null; idProduct: number; sortRus: string | null; sortEng: string | null; idVbr: number | null; } | null; }[]; productsTransported: { idProduct: number; idVbr: number | null; id: number; idSsd: string; amount: number; product: { nameRus: string; nameEng: string; group: string | null; idProduct: number; sortRus: string | null; sortEng: string | null; idVbr: number | null; } | null; }[]; vessel: { idCompany: number; nameRus: string; nameEng: string | null; idVessel: number; id: string; } | null; company: { idCompany: number; nameRus: string; nameEng: string; group: string | null; } | null; zoneCurrent: { idSubzone: number; subareaRus: string; areaRus: string; subareaEng: string | null; status: string | null; idZone: number | null; country: string | null; } | null; zoneArrival: { idSubzone: number; subareaRus: string; areaRus: string; subareaEng: string | null; status: string | null; idZone: number | null; country: string | null; } | null; } | undefined;
+

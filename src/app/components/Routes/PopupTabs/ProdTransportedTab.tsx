@@ -1,11 +1,12 @@
 import React from 'react';
 import { Card } from 'antd';
-import { SSDInfoT } from '../../../types/models';
+import { SSDFullT } from '../../../../types/backend';
 
-type Props = { ssd: SSDInfoT };
+type Props = { ssd: SSDFullT };
 
 export default function ProdTransportedTab({ ssd }: Props) {
-    if (ssd.productionTransport.length === 0) return null;
+    if (!ssd) return null;
+    if (ssd.productsTransported.length === 0) return null;
 
     return (
         <Card
@@ -13,20 +14,20 @@ export default function ProdTransportedTab({ ssd }: Props) {
             title='Транспортируемая рыбопродукция'
         >
             <div className='grid'>
-                <Card.Grid className='grid__cell grid__cell-title grid__cell--transport-name'>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--output-name'>
                     {'Наименование'}
                 </Card.Grid>
-                <Card.Grid className='grid__cell grid__cell-title grid__cell--transport-total'>
+                <Card.Grid className='grid__cell grid__cell-title grid__cell--output-amount'>
                     {'Всего, тн'}
                 </Card.Grid>
             </div>
-            {ssd.productionTransport.map((details) => (
-                <div className='grid' key={details.name}>
-                    <Card.Grid className='grid__cell grid__cell--transport-name'>
-                        {details.name}
+            {ssd.productsTransported.map((p) => (
+                <div className='grid' key={p.id}>
+                    <Card.Grid className='grid__cell grid__cell--output-name'>
+                        {p.product.nameRus}
                     </Card.Grid>
-                    <Card.Grid className='grid__cell grid__cell--transport-total'>
-                        {details.total}
+                    <Card.Grid className='grid__cell grid__cell--output-amount'>
+                        {p.amount}
                     </Card.Grid>
                 </div>
             ))}

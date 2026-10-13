@@ -14,6 +14,7 @@
 .marker {
     display: block;
     position: absolute;
+
     &::after {
         display: block;
         position: relative;
@@ -24,6 +25,7 @@
         background-color: black;
         content: 'Hello';
     }
+
     &__title {
         left: 0px;
         top: -35px;
@@ -34,15 +36,22 @@
         flex-direction: column;
         justify-content: flex-end;
     }
+
     &__wrapper {
         width: 30px;
         max-height: 30px;
     }
+
     &-red {
         filter: var(--red-filter);
     }
+
     &-blue {
         filter: var(--royalblue-filter);
+    }
+
+    &-green {
+        filter: var(--aux-main-filter);
     }
 }
 
@@ -50,16 +59,23 @@
     &-marker {
         width: 25px;
     }
+
     &-add {
         width: 15px;
     }
+
     &--scale:hover {
         transform: scale(1.5);
     }
 }
 
 .my-card {
+    padding-top: 20px;
     min-width: 600px;
+}
+
+.ant-card-head-title {
+    font-weight: bold !important;
 }
 
 // redefine leaflet classes
@@ -96,26 +112,20 @@
 
 .grid__cell {
     padding: 5px 10px !important;
+
     &-title {
         font-weight: bold;
     }
+
     &--output-name {
-        width: 60% !important;
-    }
-    &--output-sort {
-        width: 10% !important;
-    }
-    &--output-current {
-        width: 15% !important;
-    }
-    &--output-total {
-        width: 15% !important;
+        width: 45% !important;
     }
 
-    &--transport-name {
-        width: 80% !important;
+    &--output-subzone {
+        width: 35% !important;
     }
-    &--transport-total {
+
+    &--output-amount {
         width: 20% !important;
     }
 }

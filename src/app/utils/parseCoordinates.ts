@@ -1,11 +1,12 @@
-export const parseCoordinates = (coordString: string): [number, number] => {
+export const parseCoordinates = (coordString: string): [number, number] | null => {
     // Регулярное выражение ищет группы: градусы, минуты и букву направления (N/S/E/W)
+    if (!coordString) return null;
     const regex = /(\d+)°(\d+)([NSEW])/g;
     const matches = [...coordString.matchAll(regex)];
 
     if (matches.length !== 2) {
         throw new Error(
-            'Неверный формат строки координат. Ожидается вид: 55°26N 146°44E'
+            'Неверный формат строки координат. Ожидается вид: 55°26N 146°44E',
         );
     }
 

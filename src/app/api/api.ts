@@ -1,10 +1,16 @@
 import axios from 'axios';
-import { SSDCommonT } from '../../types/backend';
+import { SSDCommonT, SSDFullT } from '../../types/backend';
 
 const baseUrl = 'http://localhost:3001';
 
 const getLastSSD = async () => {
     const res = await axios.get<SSDCommonT[]>(`${baseUrl}/ssd`);
+    return res.data;
+};
+
+const getSSDById = async (id: string) => {
+    const res = await axios.get<SSDFullT>(`${baseUrl}/ssd/${id}`);
+    if (!res.data) return null;
     return res.data;
 };
 
@@ -15,7 +21,7 @@ const getLastSSD = async () => {
 
 export const api = {
     get: {
-        // vessel: getSSDByVessel,
+        SSDById: getSSDById,
         lastSSD: getLastSSD,
     },
 };

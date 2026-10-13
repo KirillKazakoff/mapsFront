@@ -2,9 +2,9 @@ import { LatLngExpression } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
-import { middleware } from '../../api/middleware';
 import MarkerSSD from './Marker';
 import { SSDCommonT } from '../../../types/backend';
+import { api } from '../../api/api';
 
 export default function Map() {
     const position: LatLngExpression = [55.26, 146.44];
@@ -12,7 +12,7 @@ export default function Map() {
 
     useEffect(() => {
         const getSsdObj = async () => {
-            const ssdObj = await middleware.initSsdByVessels();
+            const ssdObj = await api.get.lastSSD();
 
             setState(ssdObj);
         };
@@ -26,14 +26,16 @@ export default function Map() {
     });
 
     return (
-        <MapContainer id="map" center={position} zoom={4}>
+        <MapContainer
+            id='map' center={position}
+            zoom={5}
+        >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
-            <MarkerClusterGroup maxClusterRadius={25} chunkedLoading>
-                {markers}
-            </MarkerClusterGroup>
+
+            {markers}
         </MapContainer>
     );
 }
