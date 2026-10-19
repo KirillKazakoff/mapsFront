@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SSDCommonT, SSDFullT, VesselT } from '../../types/backend';
-import type { HistoryPayloadT } from '../../types/backend';
+import type { HistoryPayloadT, LoginT } from '../../types/backend';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -25,6 +25,11 @@ const getSSDHistory = async (payload: HistoryPayloadT) => {
     return res.data;
 };
 
+const checkLogin = async (payload: LoginT) => {
+    const res = await axios.post(`${baseUrl}/login`, payload);
+    return res.data;
+};
+
 export const api = {
     get: {
         SSDById: getSSDById,
@@ -32,4 +37,5 @@ export const api = {
         vessels: getVessels,
         ssdHistory: getSSDHistory,
     },
+    login: checkLogin,
 };
