@@ -1,41 +1,60 @@
 import { LatLngExpression } from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
-import MarkerSSD from './Marker';
-import { SSDCommonT } from '../../../types/backend';
+import { observer } from 'mobx-react-lite';
+import { MarkerSSD } from './Marker';
 import { api } from '../../api/api';
+import { Popup } from './Popup/Popup';
 
-export default function Map() {
+import { ssdStore } from '../../stores/ssdStore';
+import { PopupButtons } from './Popup/PopupButtons/PopupButtons';
+import { buttonsStore } from '../../stores/buttonsStore';
+
+export const Map = observer(() => {
     const position: LatLngExpression = [55.26, 146.44];
-    const [state, setState] = useState<SSDCommonT[]>(null);
+    const { isLoading, ssdLast, ssdHistory } = ssdStore;
+    const { isBurgerOpened, isSSDHiden } = buttonsStore;
 
     useEffect(() => {
-        const getSsdObj = async () => {
+        const getLastSSD = async () => {
             const ssdObj = await api.get.lastSSD();
 
-            setState(ssdObj);
+            ssdStore.setCommonSSD(ssdObj);
         };
-        getSsdObj();
+        getLastSSD();
     }, []);
 
-    if (!state) return null;
-    const markers = Object.values(state).map((ssd) => {
+    if (isLoading) return null;
+
+    const markersMain = Object.values(ssdLast).map((ssd) => {
+        if (!ssd.idSsd || isSSDHiden) return null;
+        return <MarkerSSD key={ssd.idSsd} ssd={ssd} />;
+    });
+
+    const markersHistory = Object.values(ssdHistory).map((ssd) => {
         if (!ssd.idSsd) return null;
         return <MarkerSSD key={ssd.idSsd} ssd={ssd} />;
     });
 
     return (
-        <MapContainer
-            id='map' center={position}
-            zoom={5}
-        >
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        <>
+            <PopupButtons />
+            <Popup
+                isVisible={isBurgerOpened}
+                onClose={() => buttonsStore.setBurger(false)}
             />
+            <MapContainer
+                id='map' center={position}
+                zoom={5}
+            >
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                />
 
-            {markers}
-        </MapContainer>
+                {markersMain}
+                {markersHistory}
+            </MapContainer>
+        </>
     );
-}
+});

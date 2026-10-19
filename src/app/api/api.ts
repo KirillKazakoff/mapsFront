@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { SSDCommonT, SSDFullT } from '../../types/backend';
+import { SSDCommonT, SSDFullT, VesselT } from '../../types/backend';
+import type { HistoryPayloadT } from '../../types/backend';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -14,14 +15,21 @@ const getSSDById = async (id: string) => {
     return res.data;
 };
 
-// const getSSDByVessel = async (id: string) => {
-//     const res = await axios.get<SSDCommonT[]>(`${baseUrl}/vessel/${id}`);
-//     return res.data;
-// };
+const getVessels = async () => {
+    const res = await axios.get<VesselT[]>(`${baseUrl}/vessels`);
+    return res.data;
+};
+
+const getSSDHistory = async (payload: HistoryPayloadT) => {
+    const res = await axios.post(`${baseUrl}/ssd/history`, payload);
+    return res.data;
+};
 
 export const api = {
     get: {
         SSDById: getSSDById,
         lastSSD: getLastSSD,
+        vessels: getVessels,
+        ssdHistory: getSSDHistory,
     },
 };

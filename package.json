@@ -9,6 +9,7 @@
         "lint": "eslint ."
     },
     "dependencies": {
+        "@ant-design/icons": "^6.3.4",
         "antd": "^5.6.2",
         "axios": "^1.4.0",
         "formik": "^2.2.9",
