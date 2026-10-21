@@ -8,7 +8,6 @@ const MainRoute = observer(() => {
     const { isLogin } = authStore;
 
     useEffect(() => {
-        console.log(isLogin);
         // if (!isLogin) {
         // navigate('/login');
         // return;

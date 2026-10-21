@@ -14,8 +14,6 @@ export const PopupBtn: React.FC<PopupBtnProps> = ({
     top,
     isActive = false,
 }) => {
-    console.log(`in component: ${isActive}`);
-
     return (
         <Button
             type={isActive ? 'primary' : 'default'}

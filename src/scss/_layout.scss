@@ -71,11 +71,24 @@
 
 .my-card {
     padding-top: 20px;
-    min-width: 600px;
+    min-width: 650px;
+
+    &-footer {
+        font-size: 14px;
+        font-weight: normal;
+        margin-top: '4px';
+        color: '#666';
+    }
 }
 
 .ant-card-head-title {
     font-weight: bold !important;
+}
+
+.ant-card-extra {
+    align-self: flex-start;
+    margin-right: 50px;
+    margin-top: 10px;
 }
 
 // redefine leaflet classes
@@ -85,7 +98,7 @@
 }
 
 .leaflet-popup-content {
-    min-width: 600px;
+    min-width: 800px;
     margin: 0;
 }
 
@@ -118,14 +131,14 @@
     }
 
     &--output-name {
-        width: 45% !important;
+        width: 40% !important;
     }
 
     &--output-subzone {
-        width: 35% !important;
+        width: 45% !important;
     }
 
     &--output-amount {
-        width: 20% !important;
+        width: 15% !important;
     }
 }

@@ -21,11 +21,9 @@ class SSDStore {
         this.ssdLast = data;
     }
     setCurrentSSD(data: SSDFullT) {
-        console.log('setting current clicked SSD');
         this.ssdCurrent = data;
     }
     setHistory(data: SSDCommonT[]) {
-        console.log('settings history');
         this.ssdHistory = data;
     }
 

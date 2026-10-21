@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClearOutlined, EyeOutlined, MenuOutlined } from '@ant-design/icons';
+import { ClearOutlined, EyeInvisibleOutlined, MenuOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import { buttonsStore } from '../../../../stores/buttonsStore';
 import { ssdStore } from '../../../../stores/ssdStore';
@@ -38,7 +38,7 @@ export const PopupButtons = observer(() => {
                 top={140}
                 onClick={onToggleSSDClick}
                 isActive={isSSDHiden}
-                icon={<EyeOutlined style={{ fontSize: '22px' }} />}
+                icon={<EyeInvisibleOutlined style={{ fontSize: '22px' }} />}
             />
         </>
     );
