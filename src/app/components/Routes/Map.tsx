@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { LatLngExpression } from 'leaflet';
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
@@ -11,6 +12,7 @@ import { PopupButtons } from './Popup/PopupButtons/PopupButtons';
 import { buttonsStore } from '../../stores/buttonsStore';
 import { HistoryPath } from './HistoryPath/HistoryPath';
 import { jitterCoordinates } from '../../utils/jitterCoordinates';
+import { groupify } from '../../utils/groupify';
 
 export const Map = observer(() => {
     const position: LatLngExpression = [55.26, 146.44];
@@ -55,7 +57,18 @@ export const Map = observer(() => {
     });
 
     // Координаты для линии трека берем тоже смещенные, чтобы линия шла ровно к разнесенным маркерам
-    const historyCoordinates = jitteredHistorySSD.map((ssd) => ssd.adjustedCoordinates);
+    // const historyCoordinates = jitteredHistorySSD.map((ssd) => ssd.adjustedCoordinates);
+    const historyCoordinatesObj = jitteredHistorySSD.reduce<{
+        [key: number]: [number, number][];
+    }>((total, ssd) => {
+        const objId = groupify(total, [], ssd.idVessel);
+        objId.push(ssd.adjustedCoordinates);
+        return total;
+    }, []);
+
+    const historyPathes = Object.entries(historyCoordinatesObj).map(([key, value]) => {
+        return <HistoryPath key={key} ssdPoints={value} />;
+    });
 
     return (
         <>
@@ -74,77 +87,8 @@ export const Map = observer(() => {
                 />
                 {markersMain}
                 {markersHistory}
-                <HistoryPath ssdPoints={historyCoordinates} />
+                {historyPathes}
             </MapContainer>
         </>
     );
 });
-
-// import { LatLngExpression } from 'leaflet';
-// import React, { useEffect } from 'react';
-// import { MapContainer, TileLayer } from 'react-leaflet';
-// import { observer } from 'mobx-react-lite';
-// import { MarkerSSD } from './Marker';
-// import { api } from '../../api/api';
-// import { Popup } from './Popup/Popup';
-
-// import { ssdStore } from '../../stores/ssdStore';
-// import { PopupButtons } from './Popup/PopupButtons/PopupButtons';
-// import { buttonsStore } from '../../stores/buttonsStore';
-// import { parseCoordinates } from '../../utils/parseCoordinates';
-// import { HistoryPath } from './HistoryPath/HistoryPath';
-
-// export const Map = observer(() => {
-//     const position: LatLngExpression = [55.26, 146.44];
-//     const { isLoading, ssdLast, ssdHistory } = ssdStore;
-//     const { isBurgerOpened, isSSDHiden } = buttonsStore;
-
-//     useEffect(() => {
-//         const getLastSSD = async () => {
-//             const ssdObj = await api.get.lastSSD();
-
-//             ssdStore.setCommonSSD(ssdObj);
-//         };
-//         getLastSSD();
-//     }, []);
-
-//     if (isLoading) return null;
-
-//     const markersMain = Object.values(ssdLast).map((ssd) => {
-//         if (!ssd.idSsd || isSSDHiden) return null;
-//         return <MarkerSSD key={ssd.idSsd} ssd={ssd} />;
-//     });
-
-//     const markersHistory = Object.values(ssdHistory).map((ssd) => {
-//         if (!ssd.idSsd) return null;
-//         return <MarkerSSD key={ssd.idSsd} ssd={ssd} />;
-//     });
-
-//     const historyCoordinates = ssdHistory.map((ssd) => {
-//         if (!ssd?.coordinates) return null;
-//         return parseCoordinates(ssd.coordinates);
-//     });
-
-//     return (
-//         <>
-//             <PopupButtons />
-//             <Popup
-//                 isVisible={isBurgerOpened}
-//                 onClose={() => buttonsStore.setBurger(false)}
-//             />
-//             <MapContainer
-//                 id='map' center={position}
-//                 zoom={5}
-//             >
-//                 <TileLayer
-//                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//                     url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-//                 />
-
-//                 {markersMain}
-//                 {markersHistory}
-//                 <HistoryPath ssdPoints={historyCoordinates} />
-//             </MapContainer>
-//         </>
-//     );
-// });
