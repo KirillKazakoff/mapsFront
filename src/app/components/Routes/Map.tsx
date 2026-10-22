@@ -14,6 +14,12 @@ import { HistoryPath } from './HistoryPath/HistoryPath';
 import { jitterCoordinates } from '../../utils/jitterCoordinates';
 import { groupify } from '../../utils/groupify';
 
+export type HistoryT = {
+    coords: [number, number];
+    date: string;
+    vesselId: number;
+};
+
 export const Map = observer(() => {
     const position: LatLngExpression = [55.26, 146.44];
     const { isLoading, ssdLast, ssdHistory } = ssdStore;
@@ -58,16 +64,28 @@ export const Map = observer(() => {
 
     // Координаты для линии трека берем тоже смещенные, чтобы линия шла ровно к разнесенным маркерам
     // const historyCoordinates = jitteredHistorySSD.map((ssd) => ssd.adjustedCoordinates);
-    const historyCoordinatesObj = jitteredHistorySSD.reduce<{
-        [key: number]: [number, number][];
+    // const historyCoordinatesObj = jitteredHistorySSD.reduce<{
+    //     [key: number]: [number, number][];
+    // }>((total, ssd) => {
+    //     const objId = groupify(total, [], ssd.idVessel);
+    //     objId.push(ssd.adjustedCoordinates);
+    //     return total;
+    // }, []);
+
+    const historyObj = jitteredHistorySSD.reduce<{
+        [key: number]: HistoryT[];
     }>((total, ssd) => {
         const objId = groupify(total, [], ssd.idVessel);
-        objId.push(ssd.adjustedCoordinates);
+        objId.push({
+            coords: ssd.adjustedCoordinates,
+            date: ssd.dateSsd,
+            vesselId: ssd.idVessel,
+        });
         return total;
     }, []);
 
-    const historyPathes = Object.entries(historyCoordinatesObj).map(([key, value]) => {
-        return <HistoryPath key={key} ssdPoints={value} />;
+    const historyPathes = Object.entries(historyObj).map(([key, history]) => {
+        return <HistoryPath key={key} history={history} />;
     });
 
     return (

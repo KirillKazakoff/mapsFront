@@ -35,8 +35,8 @@ export const PopupForm: React.FC<VesselsFilterFormProps> = ({ form, vesselsList 
                         .toLowerCase()
                         .includes(input.toLowerCase())}
                     options={vesselsList.map((v) => ({
-                        value: v.idVessel,
-                        label: v.nameRus,
+                        value: v.id,
+                        label: `${v.nameRus}-${v.idCompany}`,
                     }))}
                 />
             </Form.Item>

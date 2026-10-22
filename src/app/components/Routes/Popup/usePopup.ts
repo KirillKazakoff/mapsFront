@@ -9,7 +9,7 @@ import { ssdStore } from '../../../stores/ssdStore';
 
 // Типы для внутренней структуры формы Ant Design
 export type FormFieldsT = {
-    vesselIds: Array<number>;
+    vesselIds: Array<string>;
     dateRange: [Dayjs, Dayjs];
 };
 
@@ -40,7 +40,8 @@ export const useModalForm = ({ isVisible, onClose }: UseCustomModalFormProps) =>
         if (isVisible && vesselsList && vesselsList.length > 0) {
             const defaultRange: [Dayjs, Dayjs] = [dayjs().subtract(20, 'day'), dayjs()];
             form.setFieldsValue({
-                vesselIds: [28479],
+                // Омолон судно по умолчанию
+                vesselIds: ['28479-3301'],
                 dateRange: defaultRange,
             });
         }
