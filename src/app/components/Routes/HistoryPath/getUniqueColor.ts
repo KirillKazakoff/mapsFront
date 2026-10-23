@@ -23,13 +23,15 @@ const PALETTE_COLORS = [
 ];
 
 // Функция получения цвета на основе ID (всегда вернет один и тот же цвет для одного ID)
-export const getUniqueColor = (id: number): string => {
+export const getUniqueColor = (id: number | string): string => {
     const stringId = String(id);
     let hash = 0;
+
     for (let i = 0; i < stringId.length; i += 1) {
         // eslint-disable-next-line no-bitwise
-        hash = stringId.charCodeAt(i) + ((hash << 5) - hash);
+        hash = (stringId.charCodeAt(i) + ((hash << 5) - hash)) | 0;
     }
+
     const index = Math.abs(hash) % PALETTE_COLORS.length;
     return PALETTE_COLORS[index];
 };

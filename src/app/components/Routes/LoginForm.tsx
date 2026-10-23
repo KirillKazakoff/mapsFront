@@ -11,14 +11,13 @@ export const LoginForm: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Функция, которая сработает при успешной валидации полей формы
+    // Функция, которая сработает при успешной валидации формы
     const onFinish = async (values: LoginT) => {
         setLoading(true);
         setError(null);
 
         try {
             console.log('Отправка данных:', values);
-            // Здесь ваш запрос к API, например:
             const apiRes = await api.login(values);
             const isResOk = apiRes === 'ok';
 

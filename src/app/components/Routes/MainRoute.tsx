@@ -9,8 +9,8 @@ const MainRoute = observer(() => {
 
     useEffect(() => {
         // if (!isLogin) {
-        // navigate('/login');
-        // return;
+        //     navigate('/login');
+        //     return;
         // }
         navigate('/map');
     }, [isLogin]);

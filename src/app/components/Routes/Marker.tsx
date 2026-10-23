@@ -10,10 +10,10 @@ import ProdTransportedTab from './PopupTabs/ProdTransportedTab';
 import { useMarker } from './useMarker';
 import { TitleTab } from './PopupTabs/TitleTab';
 
-type Props = { ssd: SSDCommonT; adjustedCoords: [number, number] };
+type Props = { ssd: SSDCommonT; adjustedCoords: [number, number]; color?: string };
 
-export const MarkerSSD = observer(({ ssd, adjustedCoords }: Props) => {
-    const settings = useMarker({ ssd });
+export const MarkerSSD = observer(({ ssd, adjustedCoords, color }: Props) => {
+    const settings = useMarker({ ssd, color });
     if (!settings.coordinates) return null;
     // prettier-ignore
     const {

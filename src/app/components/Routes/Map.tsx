@@ -13,6 +13,7 @@ import { buttonsStore } from '../../stores/buttonsStore';
 import { HistoryPath } from './HistoryPath/HistoryPath';
 import { jitterCoordinates } from '../../utils/jitterCoordinates';
 import { groupify } from '../../utils/groupify';
+import { getUniqueColor } from './HistoryPath/getUniqueColor';
 
 export type HistoryT = {
     coords: [number, number];
@@ -52,25 +53,18 @@ export const Map = observer(() => {
     // 2. Применяем смещение для истории
     const jitteredHistorySSD = jitterCoordinates(Object.values(ssdHistory));
     const markersHistory = jitteredHistorySSD.map((ssd) => {
+        const color = getUniqueColor(ssd.idVessel);
+
         if (!ssd.idSsd) return null;
         return (
             <MarkerSSD
                 key={`hist-${ssd.idSsd}`}
                 ssd={ssd}
                 adjustedCoords={ssd.adjustedCoordinates}
+                color={color}
             />
         );
     });
-
-    // Координаты для линии трека берем тоже смещенные, чтобы линия шла ровно к разнесенным маркерам
-    // const historyCoordinates = jitteredHistorySSD.map((ssd) => ssd.adjustedCoordinates);
-    // const historyCoordinatesObj = jitteredHistorySSD.reduce<{
-    //     [key: number]: [number, number][];
-    // }>((total, ssd) => {
-    //     const objId = groupify(total, [], ssd.idVessel);
-    //     objId.push(ssd.adjustedCoordinates);
-    //     return total;
-    // }, []);
 
     const historyObj = jitteredHistorySSD.reduce<{
         [key: number]: HistoryT[];
